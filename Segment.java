@@ -10,9 +10,6 @@ public class Segment{
   private String type;
   private boolean isOn = false;
 
-  //Constants
-  private final static Color dark = Color.black.darker();
-  private final static Color light = new Color(224, 235, 235);//Color.green.brighter();
 
   //Constructor
   public Segment(int x, int y, int k, String type){
@@ -51,10 +48,10 @@ public class Segment{
 
   public void render(Graphics g){
     if(isOn == false){
-      g.setColor(dark);
+      g.setColor(new Color(212, 212, 212));
     }
     else{
-      g.setColor(light);
+      g.setColor(new Color(69, 69, 69));
     }
 
     g.fillPolygon(this.pol);

@@ -19,7 +19,7 @@ public class ClockApp extends JPanel implements Runnable{
     s1 = new SevenSegment(380, 100, size);
     s2 = new SevenSegment(460, 100, size);
 
-    this.setBackground(Color.black);
+    this.setBackground(new Color(240, 240, 240));
     this.setLayout(new BorderLayout());
 
     this.start();
@@ -89,6 +89,13 @@ public class ClockApp extends JPanel implements Runnable{
     m2.paintNumber(g2);
     s1.paintNumber(g2);
     s2.paintNumber(g2);
+
+  //  add dots between h, m, s
+    g2.setColor(new Color(69, 69, 69));
+    g2.fill(new Rectangle2D.Double(178,65,14,14));
+    g2.fill(new Rectangle2D.Double(178,135,14,14));
+    g2.fill(new Rectangle2D.Double(358, 65, 14, 14));
+    g2.fill(new Rectangle2D.Double(358, 135, 14, 14));
 
 
   }
