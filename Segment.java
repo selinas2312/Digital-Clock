@@ -11,7 +11,7 @@ public class Segment{
   private boolean isOn = false;
 
   //Constants
-  private final static Color dark = Color.green.darker();
+  private final static Color dark = Color.red.darker();
   private final static Color light = Color.green.brighter();
 
   //Constructor
