@@ -11,8 +11,8 @@ public class Segment{
   private boolean isOn = false;
 
   //Constants
-  private final static Color dark = Color.red.darker();
-  private final static Color light = Color.green.brighter();
+  private final static Color dark = Color.black.darker();
+  private final static Color light = new Color(224, 235, 235);//Color.green.brighter();
 
   //Constructor
   public Segment(int x, int y, int k, String type){
