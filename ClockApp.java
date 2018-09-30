@@ -50,7 +50,7 @@ public class ClockApp extends JPanel implements Runnable{
         this.showTime();
         repaint(); // calls paint method of JPanel
 
-        th.sleep( 1000 );  // interval given in milliseconds
+        Thread.sleep( 1000 );  // interval given in milliseconds
       } catch(Exception e){
         e.printStackTrace();
       }
@@ -98,14 +98,5 @@ public class ClockApp extends JPanel implements Runnable{
     g2.fill(new Rectangle2D.Double(358, 135, 14, 14));
 
 
-  }
-
-  public static void main(String[] args){
-    JFrame frame = new JFrame("Please WORK");
-    frame.setLocationRelativeTo(null);
-    frame.setSize(900, 300);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.getContentPane().add(new ClockApp());
-    frame.setVisible(true);
   }
 }
