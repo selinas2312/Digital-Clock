@@ -48,10 +48,10 @@ public class Segment{
 
   public void render(Graphics g){
     if(isOn == false){
-      g.setColor(new Color(212, 212, 212));
+      g.setColor(new Color(68, 72, 74));
     }
     else{
-      g.setColor(new Color(69, 69, 69));
+      g.setColor(new Color(12, 216, 201));
     }
 
     g.fillPolygon(this.pol);
