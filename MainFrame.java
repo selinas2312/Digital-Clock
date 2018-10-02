@@ -12,12 +12,13 @@ import java.awt.Component;
 import java.text.*;
 import java.awt.event.*;
 import java.text.*;
+import java.math.*;
 
 public class MainFrame extends JFrame implements Runnable{
 
   private JFrame frame;
   private JLabel placeHolder, placeHolder2;
-  private JPanel alarmPanel, btnPanel;
+  private JPanel alarmPanel, btnPanel, stopwatchPanel;
   private JButton btnAlarm, btnStopWatch, btnTimer;
   private Font btnFont, lblFont;
   private Color btnColor;
@@ -30,6 +31,7 @@ public class MainFrame extends JFrame implements Runnable{
     this.placeHolder = new JLabel("BBBBBBB");
     this.placeHolder2 = new JLabel("HIIAIUSHDIAUH");
     this.alarmPanel = new AlarmPanel();
+    this.stopwatchPanel = new StopwatchPanel();
     this.btnPanel = new JPanel();
     this.btnAlarm = new JButton("Alarm");
     this.btnStopWatch = new JButton("Stopwatch");
@@ -51,7 +53,9 @@ public class MainFrame extends JFrame implements Runnable{
     contentPane.add(btnPanel);
     contentPane.add(new ClockPanel());
     contentPane.add(alarmPanel);
+    contentPane.add(stopwatchPanel);
     alarmPanel.setVisible(false);
+    stopwatchPanel.setVisible(false);
 
     pack();
 
@@ -133,6 +137,7 @@ public class MainFrame extends JFrame implements Runnable{
   public void btnTimerActionPerformed(ActionEvent e)
   {
     this.alarmPanel.setVisible(false);
+    this.stopwatchPanel.setVisible(false);
 
     this.btnTimer.setForeground(new Color(12, 216, 201));
     this.btnAlarm.setForeground(new Color(51, 51, 51));
@@ -141,10 +146,19 @@ public class MainFrame extends JFrame implements Runnable{
   }
   public void btnStopWatchActionPerformed(ActionEvent e)
   {
-    this.alarmPanel.setVisible(false);
-    this.btnStopWatch.setForeground(new Color(12, 216, 201));
-    this.btnTimer.setForeground(new Color(51, 51, 51));
-    this.btnAlarm.setForeground(new Color(51, 51, 51));
+    //this.alarmPanel.setVisible(false);
+    if(this.stopwatchPanel.isVisible() == false){
+      this.stopwatchPanel.setVisible(true);
+      this.btnStopWatch.setForeground(new Color(12, 216, 201));
+      this.btnTimer.setForeground(new Color(51, 51, 51));
+      this.btnAlarm.setForeground(new Color(51, 51, 51));
+    } else {
+      this.stopwatchPanel.setVisible(false);
+      this.btnStopWatch.setForeground(new Color(51, 51, 51));
+      this.btnTimer.setForeground(new Color(51, 51, 51));
+      this.btnAlarm.setForeground(new Color(51, 51, 51));
+    }
+
   }
 
 
