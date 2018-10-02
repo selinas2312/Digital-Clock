@@ -17,14 +17,16 @@ public class AlarmPanel extends JPanel implements Runnable{
   List<Integer> hList, minList;
   SpinnerListModel hModel, minModel;
   JSpinner hSpinner, minSpinner;
-  JLabel hLbl, minLbl, alarmLbl;
-  JButton btnSet;
-  Font font;
-  Color color;
+  JLabel hLbl, minLbl, alarmNameLbl;
+  JButton btnSet, btnCancel;
   JComponent editor;
+  JTextField txtAlarm;
+  Font font;
+  Color lightgrey, turquoise;
   boolean alarmSet;
   int alarmH, alarmMin;
   Thread th;
+  String alarmName;
 //  Date currentTime;
 
 
@@ -39,12 +41,11 @@ public class AlarmPanel extends JPanel implements Runnable{
   private void initComponents(){
 
     this.alarmSet = false;
-    //set Background
-    this.setBackground(new Color(60, 63, 65));
 
     //set Font and color
-    this.font = new Font("Century Gothic", Font.PLAIN, 60);
-    this.color = new Color(95, 100, 103);
+    this.font = new Font("Century Gothic", Font.PLAIN, 40);
+    this.lightgrey = new Color(95, 100, 103);
+    this.turquoise = new Color(12, 216, 201);
 
     //initialize hours and minutes list
     this.hList = new ArrayList<>();
@@ -69,49 +70,82 @@ public class AlarmPanel extends JPanel implements Runnable{
     this.setSpinnerLookAndFeel(editor);
     this.editor = hSpinner.getEditor();
     this.setSpinnerLookAndFeel(editor);
-    this.hSpinner.setFont(font);
-    this.minSpinner.setFont(font);
+    this.hSpinner.setFont(this.font);
+    this.minSpinner.setFont(this.font);
 
     //set buttons
-    btnSet = new JButton("Set Alarm");
-    btnSet.setFont(font);
-    btnSet.setBackground(color);
+    this.btnSet = new JButton("Set Alarm");
+    this.btnCancel = new JButton("Cancel Alarm");
+
+    this.btnSet.setFont(this.font);
+    this.btnSet.setBackground(this.lightgrey);
+
+    this.btnCancel.setFont(this.font);
+    this.btnCancel.setBackground(this.lightgrey);
+
+    this.btnCancel.setFocusable(false);
+    this.btnSet.setFocusable(false);
+
 
     //set Labels
     this.minLbl = new JLabel("Minutes");
     this.hLbl = new JLabel("Hours");
-    this.alarmLbl = new JLabel("");
+    this.alarmNameLbl = new JLabel("Alarm Name: ");
+    this.txtAlarm = new JTextField("Enter an Alarm Name here...");
+
+    this.txtAlarm.setFont(font);
     this.hLbl.setFont(font);
     this.minLbl.setFont(font);
-    this.alarmLbl.setFont(font);
+    this.alarmNameLbl.setFont(font);
+
+    this.txtAlarm.setBackground(this.lightgrey);
+    this.txtAlarm.setForeground(Color.WHITE);
     this.minLbl.setForeground(Color.WHITE);
     this.hLbl.setForeground(Color.WHITE);
-    this.alarmLbl.setForeground(new Color(12, 216, 201));
+    this.alarmNameLbl.setForeground(Color.WHITE);
 
     //set panel setLayout
+    this.setBackground(new Color(60, 63, 65));
     this.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
 
-
-    c.insets = new Insets(10, 10, 10, 10);
-    c.gridx = 0;
-    c.gridy = 0;
-    this.add(hLbl, c);
-    c.gridx = 1;
-    this.add(minLbl, c);
-    c.ipadx = 100;
-    c.ipady = 40;
+    //add components
+    //first row
+    c.insets = new Insets(30, 10, 10, 10);
     c.gridx = 0;
     c.gridy = 1;
-    this.add(hSpinner, c);
-    c.gridx = 1;
-    this.add(minSpinner, c);
-    c.gridx = 2;
-    this.add(btnSet, c);
-    c.gridx = 0;
+    c.ipady = 30;
     c.gridwidth = 2;
+    this.add(txtAlarm, c);
+
+    //second row
+    c.gridwidth = 1;
+    c.ipady = 0;
+    c.gridx = 2;
     c.gridy = 2;
-    this.add(alarmLbl, c);
+    this.add(hLbl, c);
+
+    c.gridx = 3;
+    this.add(minLbl, c);
+
+    //3rd row
+    c.ipadx = 100;
+    c.ipady = 30;
+    c.gridx = 2;
+    c.gridy = 3;
+    this.add(hSpinner, c);
+
+    c.gridx = 3;
+    this.add(minSpinner, c);
+
+    c.ipadx = 185;
+    c.gridx = 0;
+    c.gridy = 2;
+    this.add(btnSet, c);
+
+    c.ipadx = 100;
+    c.gridy = 3;
+    this.add(btnCancel, c);
 
     //add action listeners for the buttons
     btnSet.addActionListener(new ActionListener(){
@@ -120,29 +154,40 @@ public class AlarmPanel extends JPanel implements Runnable{
       }
     });
 
+    btnCancel.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        btnCancelActionPerformed(e);
+      }
+    });
+
   }//end initComponents
 
   public void btnSetActionPerformed(ActionEvent e)
   {
-
-    if(btnSet.getText().equals("Set Alarm")){
-
-      this.alarmH = (Integer)this.hSpinner.getValue();
-      this.alarmMin = (Integer)this.minSpinner.getValue();
-      btnSet.setText("Turn off");
-      this.alarmLbl.setText("Alarm set");
-      this.alarmSet = true;
-
+    this.alarmH = (Integer)this.hSpinner.getValue();
+    this.alarmMin = (Integer)this.minSpinner.getValue();
+    this.btnSet.setForeground(this.turquoise);
+    this.btnCancel.setForeground(new Color(51, 51, 51));
+    if(this.txtAlarm.getText() != null){
+      this.alarmName = this.txtAlarm.getText();
     }
     else{
-      this.hSpinner.setValue(0);
-      this.minSpinner.setValue(0);
-      btnSet.setText("Set Alarm");
-      this.alarmLbl.setText("");
-      this.alarmSet = false;
+      this.alarmName = "";
     }
+    this.alarmSet = true;
 
-  }//end btnSetActionPerformed
+  }
+
+  public void btnCancelActionPerformed(ActionEvent e)
+  {
+    this.hSpinner.setValue(0);
+    this.minSpinner.setValue(0);
+    this.txtAlarm.setText("");
+    this.btnCancel.setForeground(this.turquoise);
+    this.btnSet.setForeground(new Color(51, 51, 51));
+    this.alarmSet = false;
+
+  }//end btnCancelActionPerformed
 
   private void setSpinnerLookAndFeel(JComponent editor){
 
@@ -153,7 +198,7 @@ public class AlarmPanel extends JPanel implements Runnable{
         if (c instanceof JTextField)
         {
             c.setForeground(Color.WHITE);
-            c.setBackground(new Color(95, 100, 103));
+            c.setBackground(this.lightgrey);
         }
     }
   }//end setSpinnerLookAndFeel
@@ -177,16 +222,19 @@ public class AlarmPanel extends JPanel implements Runnable{
           //add Dialog to Display Alarm.\
           Object[] option = {"Turn off"};
           JOptionPane alarm = new JOptionPane("ALARM!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, option);
-          JOptionPane.showMessageDialog(alarm, "ALARMMESSAGE");
-          System.out.println("ALARM");
-          alarmSet = false;
-          alarmH = 0;
-          alarmMin = 0;
+          JOptionPane.showMessageDialog(alarm, this.alarmName, "ALARM!", JOptionPane.WARNING_MESSAGE);
+
+          //reset alarm
+          this.alarmSet = false;
+          this.alarmH = 0;
+          this.alarmMin = 0;
           this.hSpinner.setValue(0);
           this.minSpinner.setValue(0);
-          btnSet.setText("Set Alarm");
-          this.alarmLbl.setText("");
           this.alarmSet = false;
+          this.txtAlarm.setText("Enter an Alarm Name here...");;
+          this.btnSet.setForeground(new Color(51, 51, 51));
+
+          th.sleep(1000);
 
         }
       } catch(Exception e){
