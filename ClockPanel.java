@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 public class ClockPanel extends JPanel implements Runnable{
 
@@ -10,8 +11,15 @@ public class ClockPanel extends JPanel implements Runnable{
   int hours, minutes, seconds;
   SevenSegment h1, h2, m1, m2, s1, s2;
   Thread th;
+  JLabel dayLbl;
+  Font font;
+  GridBagConstraints c;
+  Calendar calendar;
+  String weekday, month, year, day;
+  Date date;
 
   public ClockPanel() {
+
     h1 = new SevenSegment(20, 100, size);
     h2 = new SevenSegment(100, 100, size);
     m1 = new SevenSegment(200, 100, size);
@@ -19,8 +27,30 @@ public class ClockPanel extends JPanel implements Runnable{
     s1 = new SevenSegment(380, 100, size);
     s2 = new SevenSegment(460, 100, size);
 
+    // this.calendar  = Calendar.getInstance();
+    // this.year = Integer.toString(calendar.get(Calendar.YEAR));
+    // this.month = Integer.toString(calendar.get(Calendar.MONTH));
+    // this.date = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+    // this.day = this.getDay(calendar.get(Calendar.DAY_OF_WEEK));
+    // this.dateLbl = new JLabel(this.date + " " + this.month + " " + this.year);
+    // this.dayLbl = new JLabel(this.day + ",");
+    this.font = new Font("Century Gothic", Font.PLAIN, 60);
+
+    this.date = new Date();
+    this.weekday = new SimpleDateFormat("EEE, MMM d, YYYY").format(this.date);
+    this.dayLbl = new JLabel(this.weekday);
+
+    dayLbl.setForeground(new Color(12, 216, 201));
+    dayLbl.setFont(this.font);
+
     this.setBackground(new Color(60, 63, 65));
-    this.setLayout(new BorderLayout());
+
+    this.setLayout(new GridBagLayout());
+    this.c = new GridBagConstraints();
+    c.insets = new Insets(80, 0, 0, 250);
+    c.gridx = 0;
+    c.gridy = 1;
+    this.add(dayLbl, c);
 
     this.start();
   }
@@ -40,14 +70,12 @@ public class ClockPanel extends JPanel implements Runnable{
       try{
         Calendar cal = Calendar.getInstance();
         hours = cal.get( Calendar.HOUR_OF_DAY );
-        // if( hours > 12 )
-        // {
-        //   hours -= 12;
-        // }
         minutes = cal.get( Calendar.MINUTE );
         seconds = cal.get( Calendar.SECOND );
 
         this.showTime();
+        this.c.gridx = 0;
+        this.c.gridy = 0;
         repaint(); // calls paint method of JPanel
 
         Thread.sleep( 1000 );  // interval given in milliseconds
@@ -97,6 +125,40 @@ public class ClockPanel extends JPanel implements Runnable{
     g2.fill(new Rectangle2D.Double(358, 65, 14, 14));
     g2.fill(new Rectangle2D.Double(358, 135, 14, 14));
 
+
+  }
+
+  private String getDay(int day){
+
+    String dayString;
+    switch(day){
+      case 1:
+          dayString = "Sunday";
+          break;
+      case 2:
+          dayString = "Monday";
+          break;
+      case 3:
+          dayString = "Tuesday";
+          break;
+      case 4:
+          dayString = "Wednesday";
+          break;
+      case 5:
+          dayString = "Thursday";
+          break;
+      case 6:
+          dayString = "Friday";
+          break;
+      case 7:
+          dayString = "Saturday";
+          break;
+
+      default:
+          dayString = "Date currently not available.";
+
+    }
+    return dayString;
 
   }
 }
