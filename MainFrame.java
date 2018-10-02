@@ -86,6 +86,11 @@ public class MainFrame extends JFrame implements Runnable{
     btnTimer.setFont(btnFont);
     btnStopWatch.setFont(btnFont);
 
+    //remove little white box around button text when clicked
+    btnAlarm.setFocusable(false);
+    btnTimer.setFocusable(false);
+    btnStopWatch.setFocusable(false);
+
     //set button Color
     btnAlarm.setBackground(btnColor);
     btnTimer.setBackground(btnColor);
@@ -95,7 +100,7 @@ public class MainFrame extends JFrame implements Runnable{
     //set layout for btnPanel
     c.ipadx = 352;
     c.ipady = 40;
-    c.insets = new Insets(10, 0, 0, 0);
+    c.insets = new Insets(10, 10, 0, 100);
     c.gridx = 0;
     c.gridy = 0;
     btnPanel.add(btnAlarm, c);
@@ -128,6 +133,7 @@ public class MainFrame extends JFrame implements Runnable{
   public void btnTimerActionPerformed(ActionEvent e)
   {
     this.alarmPanel.setVisible(false);
+
     this.btnTimer.setForeground(new Color(12, 216, 201));
     this.btnAlarm.setForeground(new Color(51, 51, 51));
     this.btnStopWatch.setForeground(new Color(51, 51, 51));
