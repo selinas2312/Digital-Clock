@@ -116,19 +116,31 @@ public class MainFrame extends JFrame implements Runnable{
   {
     if(alarmPanel.isVisible() == false){
       alarmPanel.setVisible(true);
+      this.btnAlarm.setForeground(new Color(12, 216, 201));
+      this.btnTimer.setForeground(new Color(51, 51, 51));
+      this.btnStopWatch.setForeground(new Color(51, 51, 51));
     }
     else{
       alarmPanel.setVisible(false);
+      this.btnAlarm.setForeground(new Color(51, 51, 51));
     }
   }
   public void btnTimerActionPerformed(ActionEvent e)
   {
+    this.alarmPanel.setVisible(false);
+    this.btnTimer.setForeground(new Color(12, 216, 201));
+    this.btnAlarm.setForeground(new Color(51, 51, 51));
+    this.btnStopWatch.setForeground(new Color(51, 51, 51));
 
   }
   public void btnStopWatchActionPerformed(ActionEvent e)
   {
-
+    this.alarmPanel.setVisible(false);
+    this.btnStopWatch.setForeground(new Color(12, 216, 201));
+    this.btnTimer.setForeground(new Color(51, 51, 51));
+    this.btnAlarm.setForeground(new Color(51, 51, 51));
   }
+
 
   public static void main(String[] args){
 
