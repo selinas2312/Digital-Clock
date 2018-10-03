@@ -16,46 +16,51 @@ import java.math.*;
 
 public class MainFrame extends JFrame implements Runnable{
 
-  private JFrame frame;
-  private JLabel placeHolder, placeHolder2;
-  private JPanel alarmPanel, btnPanel, stopwatchPanel, timerPanel;
+  private JPanel alarmPanel, btnPanel, stopwatchPanel, timerPanel, plainPanel;
   private JButton btnAlarm, btnStopWatch, btnTimer;
   private Font btnFont, lblFont;
-  private Color btnColor;
+  Color lightgrey, darkgrey, turquoise, defaultCol;
 
   public MainFrame(){
     initComponents();
   }
 
   private void initComponents(){
-    this.placeHolder = new JLabel("BBBBBBB");
-    this.placeHolder2 = new JLabel("HIIAIUSHDIAUH");
+
     this.alarmPanel = new AlarmPanel();
     this.stopwatchPanel = new StopwatchPanel();
     this.timerPanel = new TimerPanel();
     this.btnPanel = new JPanel();
+    this.plainPanel = new JPanel();
+
     this.btnAlarm = new JButton("Alarm");
     this.btnStopWatch = new JButton("Stopwatch");
     this.btnTimer = new JButton("Timer");
+
     this.btnFont = new Font("Century Gothic", Font.PLAIN, 60);
-    this.btnColor = new Color(95, 100, 103);
+
+    this.lightgrey = new Color(95, 100, 103);
+    this.darkgrey = new Color(60, 63, 65);
+    this.turquoise = new Color(12, 216, 201);
+    this.defaultCol = new Color(51, 51, 51);
 
     //set frame properties
     setTitle("Digital Clock");
-    setLocationRelativeTo(null);
+    //setLocationRelativeTo(null);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
-  //  setSize(2000, 1000);
-    setLayout(new GridLayout(2, 2));
+    setLayout(new GridLayout(3, 2, 30, 10));
 
     this.setBtnPanel();
+    this.plainPanel.setBackground(this.darkgrey);
 
     Container contentPane = getContentPane();
-    contentPane.setBackground(new Color(60, 63, 65));
-    contentPane.add(btnPanel);
+    contentPane.setBackground(this.darkgrey);
     contentPane.add(new ClockPanel());
     contentPane.add(alarmPanel);
-    contentPane.add(stopwatchPanel);
+    contentPane.add(btnPanel);
     contentPane.add(timerPanel);
+    contentPane.add(this.plainPanel);
+    contentPane.add(stopwatchPanel);
     this.timerPanel.setVisible(false);
     alarmPanel.setVisible(false);
     stopwatchPanel.setVisible(false);
@@ -67,7 +72,7 @@ public class MainFrame extends JFrame implements Runnable{
 
   private void setBtnPanel(){
     //set btnPanel components
-    btnPanel.setBackground(new Color(60, 63, 65));
+    btnPanel.setBackground(this.darkgrey);
     btnPanel.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
 
@@ -99,15 +104,15 @@ public class MainFrame extends JFrame implements Runnable{
     btnStopWatch.setFocusable(false);
 
     //set button Color
-    btnAlarm.setBackground(btnColor);
-    btnTimer.setBackground(btnColor);
-    btnStopWatch.setBackground(btnColor);
+    btnAlarm.setBackground(this.lightgrey);
+    btnTimer.setBackground(this.lightgrey);
+    btnStopWatch.setBackground(this.lightgrey);
 
 
     //set layout for btnPanel
     c.ipadx = 352;
     c.ipady = 40;
-    c.insets = new Insets(10, 10, 0, 100);
+    c.insets = new Insets(10, 0, 0, 100);
     c.gridx = 0;
     c.gridy = 0;
     btnPanel.add(btnAlarm, c);
@@ -128,40 +133,42 @@ public class MainFrame extends JFrame implements Runnable{
   {
     if(alarmPanel.isVisible() == false){
       alarmPanel.setVisible(true);
-      this.btnAlarm.setForeground(new Color(12, 216, 201));
-      this.btnTimer.setForeground(new Color(51, 51, 51));
-      this.btnStopWatch.setForeground(new Color(51, 51, 51));
+      this.btnAlarm.setForeground(this.turquoise);
+      this.btnTimer.setForeground(this.defaultCol);
+      this.btnStopWatch.setForeground(this.defaultCol);
     }
     else{
       alarmPanel.setVisible(false);
-      this.btnAlarm.setForeground(new Color(51, 51, 51));
+      this.btnAlarm.setForeground(this.defaultCol);
     }
   }
   public void btnTimerActionPerformed(ActionEvent e)
   {
-    this.alarmPanel.setVisible(false);
-    this.stopwatchPanel.setVisible(false);
+    if(this.timerPanel.isVisible() == false){
     this.timerPanel.setVisible(true);
 
-    this.btnTimer.setForeground(new Color(12, 216, 201));
-    this.btnAlarm.setForeground(new Color(51, 51, 51));
-    this.btnStopWatch.setForeground(new Color(51, 51, 51));
+      this.btnTimer.setForeground(this.turquoise);
+      this.btnAlarm.setForeground(this.defaultCol);
+      this.btnStopWatch.setForeground(this.defaultCol);
+    }
+    else{
+      this.timerPanel.setVisible(false);
+      this.btnTimer.setForeground(this.defaultCol);
+    }
 
   }
   public void btnStopWatchActionPerformed(ActionEvent e)
   {
     //this.alarmPanel.setVisible(false);
     if(this.stopwatchPanel.isVisible() == false){
-      this.timerPanel.setVisible(false);
+
       this.stopwatchPanel.setVisible(true);
-      this.btnStopWatch.setForeground(new Color(12, 216, 201));
-      this.btnTimer.setForeground(new Color(51, 51, 51));
-      this.btnAlarm.setForeground(new Color(51, 51, 51));
+      this.btnStopWatch.setForeground(this.turquoise);
+      this.btnTimer.setForeground(this.defaultCol);
+      this.btnAlarm.setForeground(this.defaultCol);
     } else {
       this.stopwatchPanel.setVisible(false);
-      this.btnStopWatch.setForeground(new Color(51, 51, 51));
-      this.btnTimer.setForeground(new Color(51, 51, 51));
-      this.btnAlarm.setForeground(new Color(51, 51, 51));
+      this.btnStopWatch.setForeground(this.defaultCol);
     }
 
   }
