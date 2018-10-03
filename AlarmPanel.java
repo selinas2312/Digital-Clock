@@ -17,8 +17,8 @@ public class AlarmPanel extends JPanel implements Runnable{
   List<Integer> hList, minList;
   SpinnerListModel hModel, minModel;
   JSpinner hSpinner, minSpinner;
-  JLabel hLbl, minLbl, alarmNameLbl;
-  JButton btnSet, btnCancel;
+  JLabel hLbl, minLbl, panelLabel;
+  JButton btnSet, btnCancel, btnDelete;
   JComponent editor;
   JTextField txtAlarm;
   Font font;
@@ -75,7 +75,8 @@ public class AlarmPanel extends JPanel implements Runnable{
 
     //set buttons
     this.btnSet = new JButton("Set Alarm");
-    this.btnCancel = new JButton("Cancel Alarm");
+    this.btnCancel = new JButton("Turn Off");
+    this.btnDelete = new JButton("Delete");
 
     this.btnSet.setFont(this.font);
     this.btnSet.setBackground(this.lightgrey);
@@ -83,26 +84,30 @@ public class AlarmPanel extends JPanel implements Runnable{
     this.btnCancel.setFont(this.font);
     this.btnCancel.setBackground(this.lightgrey);
 
+    this.btnDelete.setFont(this.font);
+    this.btnDelete.setBackground(this.lightgrey);
+
     this.btnCancel.setFocusable(false);
     this.btnSet.setFocusable(false);
+    this.btnDelete.setFocusable(false);
 
 
     //set Labels
     this.minLbl = new JLabel("Minutes");
     this.hLbl = new JLabel("Hours");
-    this.alarmNameLbl = new JLabel("Alarm Name: ");
+    this.panelLabel = new JLabel("Alarm");
     this.txtAlarm = new JTextField("Enter an Alarm Name here...");
 
-    this.txtAlarm.setFont(font);
-    this.hLbl.setFont(font);
-    this.minLbl.setFont(font);
-    this.alarmNameLbl.setFont(font);
+    this.txtAlarm.setFont(this.font);
+    this.hLbl.setFont(this.font);
+    this.minLbl.setFont(this.font);
+    this.panelLabel.setFont(new Font("Century Gothic", Font.PLAIN, 70));
 
     this.txtAlarm.setBackground(this.lightgrey);
     this.txtAlarm.setForeground(Color.WHITE);
     this.minLbl.setForeground(Color.WHITE);
     this.hLbl.setForeground(Color.WHITE);
-    this.alarmNameLbl.setForeground(Color.WHITE);
+    this.panelLabel.setForeground(this.turquoise);
 
     //set panel setLayout
     this.setBackground(new Color(60, 63, 65));
@@ -111,41 +116,48 @@ public class AlarmPanel extends JPanel implements Runnable{
 
     //add components
     //first row
-    c.insets = new Insets(30, 10, 10, 10);
+    c.insets = new Insets(30, 10, 10, 0);
+    c.gridwidth = 3;
+    //c.gridx = 1;
+    c.gridy = 0;
+    this.add(this.panelLabel, c);
+
+    c.gridwidth = 1;
     c.gridx = 0;
     c.gridy = 1;
     c.ipady = 30;
-    c.gridwidth = 2;
-    this.add(txtAlarm, c);
+    this.add(this.hLbl, c);
 
-    //second row
-    c.gridwidth = 1;
-    c.ipady = 0;
     c.gridx = 2;
-    c.gridy = 2;
-    this.add(hLbl, c);
+    this.add(this.minLbl, c);
 
-    c.gridx = 3;
-    this.add(minLbl, c);
-
-    //3rd row
-    c.ipadx = 100;
-    c.ipady = 30;
-    c.gridx = 2;
-    c.gridy = 3;
-    this.add(hSpinner, c);
-
-    c.gridx = 3;
-    this.add(minSpinner, c);
-
-    c.ipadx = 185;
+    c.ipadx = 200;
+    c.ipady = 33;
     c.gridx = 0;
     c.gridy = 2;
-    this.add(btnSet, c);
+    this.add(this.hSpinner, c);
+
+    c.gridx = 2;;
+    this.add(this.minSpinner, c);
+
+    c.gridwidth = 3;
+    c.gridx = 0;
+    c.gridy = 3;
+    c.ipadx = 300;
+    this.add(this.txtAlarm, c);
 
     c.ipadx = 100;
-    c.gridy = 3;
-    this.add(btnCancel, c);
+    c.gridwidth = 1;
+    c.gridx = 0;
+    c.gridy = 4;
+    this.add(this.btnSet, c);
+
+    c.gridx = 1;
+    this.add(this.btnCancel, c);
+
+    c.gridx = 2;
+    this.add(this.btnDelete, c);
+
 
     //add action listeners for the buttons
     btnSet.addActionListener(new ActionListener(){
@@ -160,12 +172,21 @@ public class AlarmPanel extends JPanel implements Runnable{
       }
     });
 
+    btnDelete.addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        btnDeleteActionPerformed(e);
+      }
+    });
+
   }//end initComponents
 
   public void btnSetActionPerformed(ActionEvent e)
   {
     this.alarmH = (Integer)this.hSpinner.getValue();
     this.alarmMin = (Integer)this.minSpinner.getValue();
+    this.hLbl.setForeground(Color.WHITE);
+    this.minLbl.setForeground(Color.WHITE);
+    this.txtAlarm.setForeground(Color.WHITE);
     this.btnSet.setForeground(this.turquoise);
     this.btnCancel.setForeground(new Color(51, 51, 51));
     if(this.txtAlarm.getText() != null){
@@ -180,14 +201,28 @@ public class AlarmPanel extends JPanel implements Runnable{
 
   public void btnCancelActionPerformed(ActionEvent e)
   {
-    this.hSpinner.setValue(0);
-    this.minSpinner.setValue(0);
-    this.txtAlarm.setText("");
     this.btnCancel.setForeground(this.turquoise);
     this.btnSet.setForeground(new Color(51, 51, 51));
+    this.hLbl.setForeground(Color.RED);
+    this.minLbl.setForeground(Color.RED);
+    this.txtAlarm.setForeground(Color.RED);
     this.alarmSet = false;
 
   }//end btnCancelActionPerformed
+
+  public void btnDeleteActionPerformed(ActionEvent e){
+
+    this.hSpinner.setValue(0);
+    this.minSpinner.setValue(0);
+    this.txtAlarm.setText("");
+    this.hLbl.setForeground(Color.WHITE);
+    this.minLbl.setForeground(Color.WHITE);
+    this.txtAlarm.setForeground(Color.WHITE);
+    this.btnCancel.setForeground(new Color(51, 51, 51));
+    this.btnSet.setForeground(new Color(51, 51, 51));
+    this.alarmSet = false;
+
+  }
 
   private void setSpinnerLookAndFeel(JComponent editor){
 
@@ -221,7 +256,7 @@ public class AlarmPanel extends JPanel implements Runnable{
 
           //add Dialog to Display Alarm.\
           Object[] option = {"Turn off"};
-          JOptionPane alarm = new JOptionPane("ALARM!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, option);
+          JOptionPane alarm = new JOptionPane();
           JOptionPane.showMessageDialog(alarm, this.alarmName, "ALARM!", JOptionPane.WARNING_MESSAGE);
 
           //reset alarm
@@ -234,7 +269,7 @@ public class AlarmPanel extends JPanel implements Runnable{
           this.txtAlarm.setText("Enter an Alarm Name here...");;
           this.btnSet.setForeground(new Color(51, 51, 51));
 
-          th.sleep(1000);
+          Thread.sleep(1000);
 
         }
       } catch(Exception e){
