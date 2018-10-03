@@ -8,6 +8,7 @@ import java.math.*;
 public class StopwatchPanel extends JPanel implements Runnable{
 
   JButton btnStart, btnStop, btnReset;
+  JLabel panelLabel, placeHolder;
   int size = 7;
   int hours, minutes, seconds, milliseconds, stopHour, stopMinute, stopSecond, stopMillisecond;
   SevenSegment h1, h2, min1, min2, s1, s2, mil1, mil2;
@@ -17,39 +18,44 @@ public class StopwatchPanel extends JPanel implements Runnable{
   Font font;
   GridBagConstraints c;
   Calendar calendar;
-  Color lightgrey, darkgrey, turquoise;
+  Color lightgrey, darkgrey, turquoise, defaultCol;
 
   public StopwatchPanel(){
 
     this.setStopValues();
     this.isRestarted = false;
 
-    h1 = new SevenSegment(20, 100, size);
-    h2 = new SevenSegment(100, 100, size);
-    min1 = new SevenSegment(200, 100, size);
-    min2 = new SevenSegment(280, 100, size);
-    s1 = new SevenSegment(380, 100, size);
-    s2 = new SevenSegment(460, 100, size);
-    mil1 = new SevenSegment(560, 100, size);
-    mil2 = new SevenSegment(640, 100, size);
+    h1 = new SevenSegment(140, 300, size);
+    h2 = new SevenSegment(220, 300, size);
+    min1 = new SevenSegment(320, 300, size);
+    min2 = new SevenSegment(400, 300, size);
+    s1 = new SevenSegment(500, 300, size);
+    s2 = new SevenSegment(580, 300, size);
+    mil1 = new SevenSegment(680, 300, size);
+    mil2 = new SevenSegment(760, 300, size);
 
     this.lightgrey = new Color(95, 100, 103);
     this.darkgrey = new Color(60, 63, 65);
     this.turquoise = new Color(12, 216, 201);
+    this.defaultCol = new Color(51, 51, 51);
 
     this.font = new Font("Century Gothic", Font.PLAIN, 40);
 
     this.btnStart = new JButton("Start");
     this.btnStop = new JButton("Stop");
     this.btnReset = new JButton("Reset");
+    this.panelLabel = new JLabel("Stopwatch");
+    this.placeHolder = new JLabel();
 
     this.btnStart.setBackground(this.lightgrey);
     this.btnStop.setBackground(this.lightgrey);
     this.btnReset.setBackground(this.lightgrey);
+    this.panelLabel.setForeground(this.turquoise);
 
     this.btnStart.setFont(this.font);
     this.btnStop.setFont(this.font);
     this.btnReset.setFont(this.font);
+    this.panelLabel.setFont(new Font("Century Gothic", Font.PLAIN, 70));
 
     this.btnStart.setFocusable(false);
     this.btnStop.setFocusable(false);
@@ -77,10 +83,21 @@ public class StopwatchPanel extends JPanel implements Runnable{
     GridBagConstraints c = new GridBagConstraints();
 
     c.insets = new Insets(100, 10, 10, 0);
+    c.gridwidth = 3;
+    c.gridx = 1;
+    c.gridy = 0;
+    this.add(this.panelLabel, c);
+    c.gridwidth = 1;
     c.ipadx = 170;
     c.ipady = 33;
     c.gridx = 1;
-    c.gridy = 1;
+    c.gridy = 2;
+    this.add(this.placeHolder, c);
+    c.gridy = 3;
+    this.add(this.placeHolder, c);
+    c.gridy = 4;
+    this.add(this.placeHolder, c);
+    c.gridy = 5;
     this.add(btnStart, c);
 
     c.gridx = 2;
@@ -127,8 +144,6 @@ public void stopStopwatch() {
            this.seconds = this.stopSecond + Math.toIntExact(this.elapsedTime/1000);
            this.minutes = this.stopMinute + Math.toIntExact(this.elapsedTime/60000);
            this.hours =this.stopHour + Math.toIntExact(this.elapsedTime/3600000);
-           System.out.println(this.elapsedTime);
-          // this.setStopValues();
          }
 
          this.showTime();
@@ -180,12 +195,12 @@ public void stopStopwatch() {
 
    //  add dots between h, m, s
      g2.setColor(new Color(0, 215, 230));
-     g2.fill(new Rectangle2D.Double(178,65,14,14));
-     g2.fill(new Rectangle2D.Double(178,135,14,14));
-     g2.fill(new Rectangle2D.Double(358, 65, 14, 14));
-     g2.fill(new Rectangle2D.Double(358, 135, 14, 14));
-     g2.fill(new Rectangle2D.Double(538, 65, 14, 14));
-     g2.fill(new Rectangle2D.Double(538, 135, 14, 14));
+     g2.fill(new Rectangle2D.Double(298,265,14,14));
+     g2.fill(new Rectangle2D.Double(298,335,14,14));
+     g2.fill(new Rectangle2D.Double(478, 265, 14, 14));
+     g2.fill(new Rectangle2D.Double(478, 335, 14, 14));
+     g2.fill(new Rectangle2D.Double(658, 265, 14, 14));
+     g2.fill(new Rectangle2D.Double(658, 335, 14, 14));
    }
 
    public void btnStartActionPerformed(ActionEvent e){
@@ -194,8 +209,8 @@ public void stopStopwatch() {
      this.startStopWatch();
 
      this.btnStart.setForeground(this.turquoise);
-     this.btnStop.setForeground(new Color(51, 51, 51));
-     this.btnReset.setForeground(new Color(51, 51, 51));
+     this.btnStop.setForeground(this.defaultCol);
+     this.btnReset.setForeground(this.defaultCol);
      this.btnStart.setEnabled(false);
      this.btnStop.setEnabled(true);
    }
@@ -214,8 +229,8 @@ public void stopStopwatch() {
 
      //set buttons
      this.btnStop.setForeground(this.turquoise);
-     this.btnStart.setForeground(new Color(51, 51, 51));
-     this.btnReset.setForeground(new Color(51, 51, 51));
+     this.btnStart.setForeground(this.defaultCol);
+     this.btnReset.setForeground(this.defaultCol);
      this.btnStop.setEnabled(false);
      this.btnStart.setEnabled(true);
    }
@@ -224,8 +239,8 @@ public void stopStopwatch() {
 
      this.isRunning = false;
      this.btnReset.setForeground(this.turquoise);
-     this.btnStop.setForeground(new Color(51, 51, 51));
-     this.btnStart.setForeground(new Color(51, 51, 51));
+     this.btnStop.setForeground(this.defaultCol);
+     this.btnStart.setForeground(this.defaultCol);
 
      //reset everything to 0
      this.hours = 0;
