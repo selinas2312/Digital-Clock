@@ -123,10 +123,11 @@ public void stopStopwatch() {
          if(this.isRunning == true)
          {
            this.elapsedTime = System.currentTimeMillis() - this.startTime;
-           this.milliseconds = this.stopMillisecond/10 + Math.toIntExact((this.elapsedTime%1000));
+           this.milliseconds = (this.stopMillisecond%1000 + Math.toIntExact((this.elapsedTime%1000)))%1000;
            this.seconds = this.stopSecond + Math.toIntExact(this.elapsedTime/1000);
            this.minutes = this.stopMinute + Math.toIntExact(this.elapsedTime/60000);
            this.hours =this.stopHour + Math.toIntExact(this.elapsedTime/3600000);
+           System.out.println(this.elapsedTime);
           // this.setStopValues();
          }
 
@@ -161,7 +162,7 @@ public void stopStopwatch() {
 
      //set milliseconds
      mil1.setNumberTo(milliseconds/100);
-     mil2.setNumberTo(milliseconds%100);
+     mil2.setNumberTo((milliseconds%100)/10);
    }
 
  @Override public void paint(Graphics g){
