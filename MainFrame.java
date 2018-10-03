@@ -18,7 +18,7 @@ public class MainFrame extends JFrame implements Runnable{
 
   private JFrame frame;
   private JLabel placeHolder, placeHolder2;
-  private JPanel alarmPanel, btnPanel, stopwatchPanel;
+  private JPanel alarmPanel, btnPanel, stopwatchPanel, timerPanel;
   private JButton btnAlarm, btnStopWatch, btnTimer;
   private Font btnFont, lblFont;
   private Color btnColor;
@@ -32,6 +32,7 @@ public class MainFrame extends JFrame implements Runnable{
     this.placeHolder2 = new JLabel("HIIAIUSHDIAUH");
     this.alarmPanel = new AlarmPanel();
     this.stopwatchPanel = new StopwatchPanel();
+    this.timerPanel = new TimerPanel();
     this.btnPanel = new JPanel();
     this.btnAlarm = new JButton("Alarm");
     this.btnStopWatch = new JButton("Stopwatch");
@@ -54,6 +55,8 @@ public class MainFrame extends JFrame implements Runnable{
     contentPane.add(new ClockPanel());
     contentPane.add(alarmPanel);
     contentPane.add(stopwatchPanel);
+    contentPane.add(timerPanel);
+    this.timerPanel.setVisible(false);
     alarmPanel.setVisible(false);
     stopwatchPanel.setVisible(false);
 
@@ -138,6 +141,7 @@ public class MainFrame extends JFrame implements Runnable{
   {
     this.alarmPanel.setVisible(false);
     this.stopwatchPanel.setVisible(false);
+    this.timerPanel.setVisible(true);
 
     this.btnTimer.setForeground(new Color(12, 216, 201));
     this.btnAlarm.setForeground(new Color(51, 51, 51));
@@ -148,6 +152,7 @@ public class MainFrame extends JFrame implements Runnable{
   {
     //this.alarmPanel.setVisible(false);
     if(this.stopwatchPanel.isVisible() == false){
+      this.timerPanel.setVisible(false);
       this.stopwatchPanel.setVisible(true);
       this.btnStopWatch.setForeground(new Color(12, 216, 201));
       this.btnTimer.setForeground(new Color(51, 51, 51));
