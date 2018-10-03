@@ -20,20 +20,19 @@ public class ClockPanel extends JPanel implements Runnable{
 
   public ClockPanel() {
 
-    h1 = new SevenSegment(20, 100, size);
-    h2 = new SevenSegment(100, 100, size);
-    m1 = new SevenSegment(200, 100, size);
-    m2 = new SevenSegment(280, 100, size);
-    s1 = new SevenSegment(380, 100, size);
-    s2 = new SevenSegment(460, 100, size);
+    // h1 = new SevenSegment(20, 100, size);
+    // h2 = new SevenSegment(100, 100, size);
+    // m1 = new SevenSegment(200, 100, size);
+    // m2 = new SevenSegment(280, 100, size);
+    // s1 = new SevenSegment(380, 100, size);
+    // s2 = new SevenSegment(460, 100, size);
+    h1 = new SevenSegment(140, 100, size);
+    h2 = new SevenSegment(220, 100, size);
+    m1 = new SevenSegment(320, 100, size);
+    m2 = new SevenSegment(400, 100, size);
+    s1 = new SevenSegment(500, 100, size);
+    s2 = new SevenSegment(580, 100, size);
 
-    // this.calendar  = Calendar.getInstance();
-    // this.year = Integer.toString(calendar.get(Calendar.YEAR));
-    // this.month = Integer.toString(calendar.get(Calendar.MONTH));
-    // this.date = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
-    // this.day = this.getDay(calendar.get(Calendar.DAY_OF_WEEK));
-    // this.dateLbl = new JLabel(this.date + " " + this.month + " " + this.year);
-    // this.dayLbl = new JLabel(this.day + ",");
     this.font = new Font("Century Gothic", Font.PLAIN, 60);
 
     this.date = new Date();
@@ -47,7 +46,7 @@ public class ClockPanel extends JPanel implements Runnable{
 
     this.setLayout(new GridBagLayout());
     this.c = new GridBagConstraints();
-    c.insets = new Insets(80, 0, 0, 250);
+    c.insets = new Insets(80, 80, 0, 250);
     c.gridx = 0;
     c.gridy = 1;
     this.add(dayLbl, c);
@@ -120,45 +119,11 @@ public class ClockPanel extends JPanel implements Runnable{
 
   //  add dots between h, m, s
     g2.setColor(new Color(0, 215, 230));
-    g2.fill(new Rectangle2D.Double(178,65,14,14));
-    g2.fill(new Rectangle2D.Double(178,135,14,14));
-    g2.fill(new Rectangle2D.Double(358, 65, 14, 14));
-    g2.fill(new Rectangle2D.Double(358, 135, 14, 14));
+    g2.fill(new Rectangle2D.Double(298,65,14,14));
+    g2.fill(new Rectangle2D.Double(298,135,14,14));
+    g2.fill(new Rectangle2D.Double(478, 65, 14, 14));
+    g2.fill(new Rectangle2D.Double(478, 135, 14, 14));
 
-
-  }
-
-  private String getDay(int day){
-
-    String dayString;
-    switch(day){
-      case 1:
-          dayString = "Sunday";
-          break;
-      case 2:
-          dayString = "Monday";
-          break;
-      case 3:
-          dayString = "Tuesday";
-          break;
-      case 4:
-          dayString = "Wednesday";
-          break;
-      case 5:
-          dayString = "Thursday";
-          break;
-      case 6:
-          dayString = "Friday";
-          break;
-      case 7:
-          dayString = "Saturday";
-          break;
-
-      default:
-          dayString = "Date currently not available.";
-
-    }
-    return dayString;
 
   }
 }
