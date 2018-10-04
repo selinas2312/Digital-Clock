@@ -53,8 +53,6 @@ public class AlarmPanel extends JPanel implements Runnable{
     * calls the initComponents() method of the class to initalize the components
     * and starts the Thread
     * </p>
-    * @param none
-    * @return none
     */
   public AlarmPanel(){
 
@@ -70,8 +68,6 @@ public class AlarmPanel extends JPanel implements Runnable{
     *and feels and adds them to the class panel
     *also initializes ActionListeners for components
     * </p>
-    * @param None
-    * @return None
     */
   private void initComponents(){
 
@@ -222,7 +218,6 @@ public class AlarmPanel extends JPanel implements Runnable{
     *and sets the colors of the GUI accordingly
     * </p>
     * @param ActionEvent e
-    * @return None
     */
   public void btnSetActionPerformed(ActionEvent e)
   {
@@ -251,7 +246,6 @@ public class AlarmPanel extends JPanel implements Runnable{
     *Without having to reset the alarm time and name manually
     * </p>
     * @param ActionEvent e
-    * @return None
     */
   public void btnCancelActionPerformed(ActionEvent e)
   {
@@ -272,7 +266,6 @@ public class AlarmPanel extends JPanel implements Runnable{
     *and name to 0 / null
     * </p>
     * @param ActionEvent e
-    * @return None
     */
   public void btnDeleteActionPerformed(ActionEvent e){
 
@@ -291,7 +284,6 @@ public class AlarmPanel extends JPanel implements Runnable{
   /**
     * sets the color and font of the JSpinners
     * @param JComponent editor
-    * @return None
     */
   private void setSpinnerLookAndFeel(JComponent editor){
 
@@ -309,8 +301,6 @@ public class AlarmPanel extends JPanel implements Runnable{
 
   /**
     * initializes and starts the Thread
-    * @param None
-    * @return None
     */
   public void start(){
     if(th == null)
@@ -329,7 +319,6 @@ public class AlarmPanel extends JPanel implements Runnable{
     * and the alarm is reset to 0
     * </p>
     * @param ActionEvent e
-    * @return None
     */
   @Override
   public void run(){

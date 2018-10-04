@@ -72,8 +72,6 @@ public class ClockPanel extends JPanel implements Runnable{
     * and adds the components to the panel
     * and starts the Thread by calling the start() method of this class
     * </p>
-    * @param None
-    * @return None
     */
   public ClockPanel() {
 
@@ -107,8 +105,6 @@ public class ClockPanel extends JPanel implements Runnable{
 
   /**
     * initializes and starts the Thread
-    * @param None
-    * @return None
     */
   public void start(){
     if(th == null)
@@ -124,8 +120,6 @@ public class ClockPanel extends JPanel implements Runnable{
     * sets the current time and repaints each segment to display the change in time
     * every second
     * </p>
-    * @param None
-    * @return None
     */
  @Override
   public void run(){
@@ -152,8 +146,6 @@ public class ClockPanel extends JPanel implements Runnable{
 
   /**
     * sets each digit to represent the current time
-    * @param None
-    * @return None
     */
   public void showTime(){
 
@@ -186,7 +178,6 @@ public class ClockPanel extends JPanel implements Runnable{
     * an adds semicolons betwee the hours, minutes and seconds segments
     * </p>
     * @param Graphics g
-    * @return None 
     */
 
 @Override public void paint(Graphics g){

@@ -48,7 +48,6 @@ public class Segment{
     * @param int y         the y coordinate
     * @param int k         the factor of the coordinates
     * @param String type   horizontal or vertical alignment
-    * @return None
     */
   public Segment(int x, int y, int k, String type){
 
@@ -107,4 +106,4 @@ public class Segment{
 
     g.fillPolygon(this.pol);
   }
-}//end class 
+}//end class

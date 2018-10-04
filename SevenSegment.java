@@ -31,7 +31,6 @@ public class SevenSegment{
     * @param int x         the x coordinate
     * @param int y         the y coordinate
     * @param int k         the factor of the coordinates
-    * @return None
     */
 
   public SevenSegment(int x, int y, int k){
@@ -58,7 +57,6 @@ public class SevenSegment{
     * according to what number we want it to display
     * </p>
     * @param int num      the number we want to be displayed
-    * @return None
     */
   public void setNumberTo(int num){
     if(num == 0)
@@ -173,7 +171,6 @@ public class SevenSegment{
     * by calling the render method of the Segment class
     * </p>
     * @param Graphics2D g2
-    * @return None
     */
   public void paintNumber(Graphics2D g2)
   {
@@ -189,8 +186,6 @@ public class SevenSegment{
     * turns off the whole number by setting
     * the state of each segment to false
     * </p>
-    * @param None
-    * @return None
     */
   public void unpaintNumber(){
     for(int i = 0; i < 7; i++)

@@ -5,21 +5,76 @@ import javax.swing.*;
 import java.util.*;
 import java.math.*;
 
-public class TimerPanel extends JPanel implements Runnable{
+/**
+  * @author Selina Schuh s5124327
+  * @version 1.4
+  */
 
+public class TimerPanel extends JPanel implements Runnable{
+       //class body
+
+  /**
+    * buttons to start, pause and stop the timer
+    */
   JButton btnStart, btnPause, btnReset;
+
+  /**
+    * label to display the name of the panel
+    */
   JLabel panelLabel, placeHolder;
+
+  /**
+    * variables to set the k size of the sevensegment number representation,
+    * the remaining hours, minutes and seconds of the timer,
+    * and the start time, elapsed time and set time of the timer
+    */
   int size = 7;
   int hours, minutes, seconds;
-  SevenSegment h1, h2, min1, min2, s1, s2;
   long startTime, elapsedTime, timer = 7200000;
+
+  /**
+    * the SevenSegment variables to represent each number as a sevensegment number
+    */
+  SevenSegment h1, h2, min1, min2, s1, s2;
+
+  /**
+    * boolean variables to indicate whether the timer is running or paused
+    */
   boolean isRunning, isPaused;
   Thread th;
+
+  /**
+    * the font for the buttons and labels
+    */
   Font font;
+
+  /**
+    * GridBagLayout constraints for the location of the components of the panel
+    */
   GridBagConstraints c;
+
+  /**
+    * a calendar variable to get the current time
+    */
   Calendar calendar;
+
+  /**
+    * color variables to set the colors of the background, lables and buttons
+    */
   Color lightgrey, darkgrey, turquoise, defaultCol;
 
+
+
+  /**
+    * the constructor of the class
+    * <p>
+    * initializes all components of the panel,
+    * sets the fonts, colors and locations of the components,
+    * adds the components to the panel,
+    * adds actionlisteners to the components,
+    * and starts the thread by calling the start method of the class
+    * </p>
+    */
   public TimerPanel(){
 
     h1 = new SevenSegment(200, 300, size);
@@ -104,6 +159,10 @@ public class TimerPanel extends JPanel implements Runnable{
     this.start();
   }
 
+
+  /**
+    * initializes and starts the Thread
+    */
   public void start(){
     if(th == null)
     {
@@ -112,12 +171,29 @@ public class TimerPanel extends JPanel implements Runnable{
     }
   }
 
+
+  /**
+    * initializes the start time
+    * <p>
+    * initializes the start time by setting it to the current time
+    * and adding the set time of the timer to it
+    * </p>
+    */
   public void setStartTime(){
     this.startTime = System.currentTimeMillis();
     this.startTime += this.timer;
 
   }
 
+  /**
+    * ovverrides the run method of the runnable interface
+    * <p>
+    * if the timer is running :
+    * sets the remaining hours minutes and seconds of the timer
+    * by subtracting the current time from the start time
+    * and calls the showTime and paint method of this class to update the SevenSegment display
+    * to display the remaining time of the timer
+    */
   @Override
    public void run(){
      while(th != null)
@@ -144,6 +220,10 @@ public class TimerPanel extends JPanel implements Runnable{
      }
    } // end of run()
 
+
+   /**
+     * sets each digit to represent the remaining time of the timer
+     */
    public void showTime(){
 
      if(hours < 10)
@@ -166,6 +246,16 @@ public class TimerPanel extends JPanel implements Runnable{
 
    }
 
+
+   /**
+     * overrides the paint method of the runnable interface
+     * <p>
+     * calls the paintNumber method of the SevenSegment class
+     * to change the digits according to the remaining time of the timer
+     * an adds semicolons betwee the hours, minutes and seconds segments
+     * </p>
+     * @param Graphics g
+     */
  @Override public void paint(Graphics g){
      super.paint(g);
      Graphics2D g2 = (Graphics2D)g;
@@ -185,6 +275,16 @@ public class TimerPanel extends JPanel implements Runnable{
      g2.fill(new Rectangle2D.Double(538, 335, 14, 14));
    }
 
+
+   /**
+    * starts the timer when start button is clicked
+    * <p>
+    * starts the timer by setting the isRunning variable to true,
+    * setting the start time, unless the timer is resuming after being paused
+    * hence when isPaused is true,
+    * enables the Pause button and disables the start button
+    * @param ActionEvent e
+    */
    public void btnStartActionPerformed(ActionEvent e){
 
      this.isRunning = true;
@@ -200,6 +300,14 @@ public class TimerPanel extends JPanel implements Runnable{
      this.btnPause.setEnabled(true);
    }
 
+
+   /**
+    * Pauses the timer when pause button is clicked
+    * <p>
+    * pauses the timer by setting the isRunning variable to false and the isPaused variable to true
+    * enables the Start button and disables the Pause button
+    * @param ActionEvent e
+    */
    public void btnPauseActionPerformed(ActionEvent e){
       //when pause stop timer and when restart reset start time
       this.isRunning = false;
@@ -211,6 +319,15 @@ public class TimerPanel extends JPanel implements Runnable{
       this.btnStart.setEnabled(true);
    }
 
+
+   /**
+    * resets the timer when reset button is clicked
+    * <p>
+    * resets the timer by setting the isRunning and isPaused variables to false,,
+    * resets the hours, minutes, seconds and startTime variables to 0,
+    * and calls the showTime and repaint methods of this class to update the sevensegment numbers
+    * @param ActionEvent e
+    */
    public void btnResetActionPerformed(ActionEvent e){
 
      this.isRunning = false;

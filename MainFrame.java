@@ -49,8 +49,6 @@ public class MainFrame extends JFrame implements Runnable{
     * <p>
     * calls the initComponents() method of the class to initalize the components
     * </p>
-    * @param none
-    * @return none
     */
   public MainFrame(){
     initComponents();
@@ -65,8 +63,6 @@ public class MainFrame extends JFrame implements Runnable{
     * sets the properties of the main frame
     * also initializes ActionListeners for components
     * </p>
-    * @param None
-    * @return None
     */
   private void initComponents(){
 
@@ -113,6 +109,12 @@ public class MainFrame extends JFrame implements Runnable{
 
   }
 
+  /**
+    * sets the colors and fonts for the buttonpanel,
+    * sets the layout and location for the buttonpanel,
+    * and adds actionlisteners for each button
+    * and adds the button to the button panel
+    */
   private void setBtnPanel(){
     //set btnPanel components
     btnPanel.setBackground(this.darkgrey);
@@ -181,7 +183,6 @@ public class MainFrame extends JFrame implements Runnable{
     * and changes the colors of the button texts accordingly
     * </p>
     * @param ActionEvent e
-    * @return none
     */
   public void btnAlarmActionPerformed(ActionEvent e)
   {
@@ -205,7 +206,6 @@ public class MainFrame extends JFrame implements Runnable{
     * and changes the colors of the button texts accordingly
     * </p>
     * @param ActionEvent e
-    * @return none
     */
   public void btnTimerActionPerformed(ActionEvent e)
   {
@@ -231,7 +231,6 @@ public class MainFrame extends JFrame implements Runnable{
     * and changes the colors of the button texts accordingly
     * </p>
     * @param ActionEvent e
-    * @return none
     */
   public void btnStopWatchActionPerformed(ActionEvent e)
   {
@@ -268,8 +267,6 @@ public class MainFrame extends JFrame implements Runnable{
 
   /**
     * overrides the run method of the Runnable interface
-    * @param None
-    * @return none
     */
   @Override
   public void run(){

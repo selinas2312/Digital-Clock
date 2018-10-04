@@ -5,21 +5,78 @@ import javax.swing.*;
 import java.util.*;
 import java.math.*;
 
-public class StopwatchPanel extends JPanel implements Runnable{
+/**
+  * @author Selina Schuh s5124327
+  * @version 1.4
+  */
 
+public class StopwatchPanel extends JPanel implements Runnable{
+      //class body
+
+      /**
+        * buttons to start, stop and reset the stopwatch
+        */
   JButton btnStart, btnStop, btnReset;
+
+  /**
+    * label to display the name of the panel
+    */
   JLabel panelLabel, placeHolder;
+
+  /**
+    * variables to set the k size of the sevensegment number representation,
+    * current hour, minutes, seconds and milliseconds,
+    * the hour, minutes, seconds and milliseconds when the stopwatch is paused/stopped
+    * and the start time, elapsed time and stop time of the stopwatch
+    */
   int size = 7;
   int hours, minutes, seconds, milliseconds, stopHour, stopMinute, stopSecond, stopMillisecond;
-  SevenSegment h1, h2, min1, min2, s1, s2, mil1, mil2;
   long startTime, stopTime, elapsedTime;
+
+  /**
+    * the SevenSegment variables to represent each number of the stopwatch as a sevensegment number
+    */
+  SevenSegment h1, h2, min1, min2, s1, s2, mil1, mil2;
+
+  /**
+    * variables to indicate whether the stopwatch is running or is restarted
+    */
   boolean isRunning, isRestarted;
   Thread th;
+
+  /**
+   * variable to set the font of the text components of the panel
+   */
   Font font;
+
+  /**
+    * GridBagLayout constraints for the location of the components of the panel
+    */
   GridBagConstraints c;
+
+  /**
+    * a calendar variable to get the current time
+    */
   Calendar calendar;
+
+  /**
+    * color variables to set the colors of the background, lables and buttons
+    */
   Color lightgrey, darkgrey, turquoise, defaultCol;
 
+
+  /**
+    * the constructor of the class
+    * <p>
+    * initializes the GUI components of the class,
+    * initializes the variables
+    * and a sevensegment object for each number of the stopwatch
+    * sets colors, fonts and locations of all components
+    * adds actionlisteners for buttons
+    * and adds the components to the panel
+    * and starts the thread by calling the thread method of the class
+    * </p>
+    */
   public StopwatchPanel(){
 
     this.setStopValues();
@@ -110,6 +167,10 @@ public class StopwatchPanel extends JPanel implements Runnable{
 
   }
 
+
+  /**
+    * initializes and starts the Thread
+    */
   public void start(){
     if(th == null)
     {
@@ -118,18 +179,41 @@ public class StopwatchPanel extends JPanel implements Runnable{
     }
   }
 
+
+  /**
+    * starts the stopwatch
+    * <p>
+    * Starts the Stopwatch by setting the start time to the current time in milliseconds
+    * and the isRunning boolean variable to true
+    * </p>
+    */
   public void startStopWatch() {
   this.startTime = System.currentTimeMillis();
   this.isRunning = true;
 }
 
-
+/**
+  * stops the stopwatch
+  * <p>
+  * stops the stopwatch by setting the stoptime to the current time
+  * and setting the isRunning boolean variable to false.
+  * </p>
+  */
 public void stopStopwatch() {
   this.stopTime = System.currentTimeMillis();
   this.isRunning = false;
 }
 
 
+  /**
+    * overrides the run method of the runnable interface
+    *  <p>
+    * when the isRunning variable is set to true
+    * the elapsed time is calculated by subtracting the start time from the current time
+    * calculates the milliseconds, seconds, minutes and hours based on the elapsed time (given in milliseconds)
+    * calls the showTime and repaint methods of this class to update the sevensegment number displays
+    * </p>
+    */
   @Override
    public void run(){
      while(th != null)
@@ -155,6 +239,10 @@ public void stopStopwatch() {
      }
    } // end of run()
 
+
+   /**
+     * sets each digit to represent the elapsed time of the stopwatch
+     */
    public void showTime(){
 
      if(hours < 10)
@@ -180,6 +268,16 @@ public void stopStopwatch() {
      mil2.setNumberTo((milliseconds%100)/10);
    }
 
+
+   /**
+     * overrides the paint method of the runnable interface
+     * <p>
+     * calls the paintNumber method of the SevenSegment class
+     * to change the digits according to the elapsed time of the stopwatch
+     * an adds semicolons betwee the hours, minutes and seconds and milliseconds segments
+     * </p>
+     * @param Graphics g
+     */
  @Override public void paint(Graphics g){
      super.paint(g);
      Graphics2D g2 = (Graphics2D)g;
@@ -203,6 +301,16 @@ public void stopStopwatch() {
      g2.fill(new Rectangle2D.Double(658, 335, 14, 14));
    }
 
+
+   /**
+    * starts the stopwatch
+    * <p>
+    * starts the stopwatch by setting the isRunning variable to true
+    * calling the startStopWatch method to set the start time
+    * and enabling the the stop button
+    * </p>
+    * @param ActionEvent e
+    */
    public void btnStartActionPerformed(ActionEvent e){
 
      this.isRunning = true;
@@ -215,6 +323,17 @@ public void stopStopwatch() {
      this.btnStop.setEnabled(true);
    }
 
+   /**
+    * stops(pauses) the stopwatch
+    * <p>
+    * stops / pauses the stopwatch by setting the isRunning variable to false
+    * and the isRestarted variable to true so next time the
+    * start button is clicked the stopwatch resumes instead of starting from 0 again
+    * sets the stop time variables
+    * and enables the start button
+    * </p>
+    * @param ActionEvent e
+    */
    public void btnStopActionPerformed(ActionEvent e){
 
      this.isRunning = false;
@@ -235,6 +354,17 @@ public void stopStopwatch() {
      this.btnStart.setEnabled(true);
    }
 
+
+   /**
+    * resets the stopwatch
+    * <p>
+    * resets the stopwatch by setting the is running variable to false
+    * and resetting all time variables to 0
+    * and calling the showTime and repaint methods of the class to reset
+    * the SevenSegment representation of the numbers to 0
+    * </p>
+    * @param ActionEvent e
+    */
    public void btnResetActionPerformed(ActionEvent e){
 
      this.isRunning = false;
@@ -252,6 +382,9 @@ public void stopStopwatch() {
      this.repaint();
    }
 
+   /**
+    * resets the stopvalues to 0
+    */
    private void setStopValues(){
      this.stopHour = 0;
      this.stopMinute = 0;
