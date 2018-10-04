@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 
 /**
   * @author Selina Schuh s5124327
-  * @version 1.4
+  * @version 1.5
   * @since 1.1
   */
 
@@ -18,44 +18,44 @@ public class ClockPanel extends JPanel implements Runnable{
   /**
     * the factor for the size of each seven segment number representation
     */
-  int size = 7;
+  private int size = 7;
 
   /**
     * variables for the current time
     */
-  int hours, minutes, seconds;
+  private int hours, minutes, seconds;
 
   /**
     * the sevensegment numbers to represent the current time
     */
-  SevenSegment h1, h2, m1, m2, s1, s2;
+  private SevenSegment h1, h2, m1, m2, s1, s2;
 
-  Thread th;
+  private Thread th;
 
   /**
     * a label to display the current date and day
     */
-  JLabel dayLbl;
+  private JLabel dayLbl;
 
   /**
     * the font for the label
     */
-  Font font;
+  private Font font;
 
   /**
     * the GridBagLayout Constraints to align the components on the panel
     */
-  GridBagConstraints c;
+  private GridBagConstraints c;
 
   /**
     * a calendar object to get the current time
     */
-  Calendar calendar;
+  private Calendar calendar;
 
   /**
     * Strings representing the current date and day
     */
-  String weekday, month, year, day;
+  private String weekday, month, year, day;
 
   /**
     * a date object to represent the current date and day
