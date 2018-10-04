@@ -14,17 +14,60 @@ import java.awt.event.*;
 import java.text.*;
 import java.math.*;
 
-public class MainFrame extends JFrame implements Runnable{
+/**
+  * @author Selina Schuh s5124327
+  * @version 1.4
+  */
 
+public class MainFrame extends JFrame implements Runnable{
+      //class body
+
+
+  /**
+    * the custom panels that represent the components the main frame is made up of
+    */
   private JPanel alarmPanel, btnPanel, stopwatchPanel, timerPanel, plainPanel;
+
+  /**
+    * the buttons that are part of the button panel
+    */
   private JButton btnAlarm, btnStopWatch, btnTimer;
+
+  /**
+    * the fonts for labels and buttons
+    */
   private Font btnFont, lblFont;
+
+  /**
+    * the different colors for the components of the main frame
+    */
   Color lightgrey, darkgrey, turquoise, defaultCol;
 
+
+  /**
+    * The constructor of the class
+    * <p>
+    * calls the initComponents() method of the class to initalize the components
+    * </p>
+    * @param none
+    * @return none
+    */
   public MainFrame(){
     initComponents();
   }
 
+
+  /**
+    * Initialize the GUI componenets of this class
+    * <p>
+    * Initializes all GUI components and sets their color font and location
+    * adds them to the main frame
+    * sets the properties of the main frame
+    * also initializes ActionListeners for components
+    * </p>
+    * @param None
+    * @return None
+    */
   private void initComponents(){
 
     this.alarmPanel = new AlarmPanel();
@@ -129,6 +172,17 @@ public class MainFrame extends JFrame implements Runnable{
   } // end setBtnPanel()
 
 
+
+  /**
+    * changes the visibility of the alarmpanel
+    * <p>
+    * changes the visibility of the alarmpanel depending on whether it is currently
+    * visible or not
+    * and changes the colors of the button texts accordingly
+    * </p>
+    * @param ActionEvent e
+    * @return none
+    */
   public void btnAlarmActionPerformed(ActionEvent e)
   {
     if(alarmPanel.isVisible() == false){
@@ -142,6 +196,17 @@ public class MainFrame extends JFrame implements Runnable{
       this.btnAlarm.setForeground(this.defaultCol);
     }
   }
+
+  /**
+    * changes the visibility of the timer panel
+    * <p>
+    * changes the visibility of the timer panel depending on whether it is currently
+    * visible or not
+    * and changes the colors of the button texts accordingly
+    * </p>
+    * @param ActionEvent e
+    * @return none
+    */
   public void btnTimerActionPerformed(ActionEvent e)
   {
     if(this.timerPanel.isVisible() == false){
@@ -157,6 +222,17 @@ public class MainFrame extends JFrame implements Runnable{
     }
 
   }
+
+  /**
+    * changes the visibility of the stopwatch panel
+    * <p>
+    * changes the visibility of the stopwatch panel depending on whether it is currently
+    * visible or not
+    * and changes the colors of the button texts accordingly
+    * </p>
+    * @param ActionEvent e
+    * @return none
+    */
   public void btnStopWatchActionPerformed(ActionEvent e)
   {
     //this.alarmPanel.setVisible(false);
@@ -174,6 +250,12 @@ public class MainFrame extends JFrame implements Runnable{
   }
 
 
+  /**
+    * the main method of the application
+    * <p>
+    * the main methid of the application which initializes an new MainFrame object
+    * and sets its visibility to true
+    */
   public static void main(String[] args){
 
     java.awt.EventQueue.invokeLater(new Runnable(){
@@ -184,6 +266,11 @@ public class MainFrame extends JFrame implements Runnable{
   });
 }
 
+  /**
+    * overrides the run method of the Runnable interface
+    * @param None
+    * @return none
+    */
   @Override
   public void run(){
     throw new UnsupportedOperationException("Not supported yet.");
