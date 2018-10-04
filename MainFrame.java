@@ -17,6 +17,7 @@ import java.math.*;
 /**
   * @author Selina Schuh s5124327
   * @version 1.4
+  * @since 1.0
   */
 
 public class MainFrame extends JFrame implements Runnable{

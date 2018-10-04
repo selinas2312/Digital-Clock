@@ -15,6 +15,7 @@ import java.text.*;
 /**
   * @author Selina Schuh s5124327
   * @version 1.4
+  * @since 1.1 
   */
 
 public class AlarmPanel extends JPanel implements Runnable{
