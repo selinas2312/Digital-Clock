@@ -5,27 +5,78 @@ import javax.swing.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
-public class ClockPanel extends JPanel implements Runnable{
+/**
+  * @author Selina Schuh s5124327
+  * @version 1.6
+  * @since 1.0
+  */
 
+
+public class ClockPanel extends JPanel implements Runnable{
+      //class body
+
+  /**
+    * the factor for the size of each seven segment number representation
+    */
   int size = 7;
+
+  /**
+    * variables for the current time
+    */
   int hours, minutes, seconds;
+
+  /**
+    * the sevensegment numbers to represent the current time
+    */
   SevenSegment h1, h2, m1, m2, s1, s2;
+
   Thread th;
+
+  /**
+    * a label to display the current date and day
+    */
   JLabel dayLbl;
+
+  /**
+    * the font for the label
+    */
   Font font;
+
+  /**
+    * the GridBagLayout Constraints to align the components on the panel
+    */
   GridBagConstraints c;
+
+  /**
+    * a calendar object to get the current time
+    */
   Calendar calendar;
+
+  /**
+    * Strings representing the current date and day
+    */
   String weekday, month, year, day;
+
+  /**
+    * a date object to represent the current date and day
+    */
   Date date;
 
+
+  /**
+    * the constructor of the class
+    * <p>
+    * initializes a seven segment object for each number
+    * initializes all other fields
+    * sets the font and colors of the panel
+    * and adds the components to the panel
+    * and starts the Thread by calling the start() method of this class
+    * </p>
+    * @param None
+    * @return None
+    */
   public ClockPanel() {
 
-    // h1 = new SevenSegment(20, 100, size);
-    // h2 = new SevenSegment(100, 100, size);
-    // m1 = new SevenSegment(200, 100, size);
-    // m2 = new SevenSegment(280, 100, size);
-    // s1 = new SevenSegment(380, 100, size);
-    // s2 = new SevenSegment(460, 100, size);
     h1 = new SevenSegment(140, 100, size);
     h2 = new SevenSegment(220, 100, size);
     m1 = new SevenSegment(320, 100, size);
@@ -54,6 +105,11 @@ public class ClockPanel extends JPanel implements Runnable{
     this.start();
   }
 
+  /**
+    * initializes and starts the Thread
+    * @param None
+    * @return None
+    */
   public void start(){
     if(th == null)
     {
@@ -62,6 +118,15 @@ public class ClockPanel extends JPanel implements Runnable{
     }
   }
 
+  /**
+    * overrides the run method of the runnable interface
+    * <p>
+    * sets the current time and repaints each segment to display the change in time
+    * every second
+    * </p>
+    * @param None
+    * @return None
+    */
  @Override
   public void run(){
     while(th != null)
@@ -84,6 +149,12 @@ public class ClockPanel extends JPanel implements Runnable{
     }
   } // end of run()
 
+
+  /**
+    * sets each digit to represent the current time
+    * @param None
+    * @return None
+    */
   public void showTime(){
 
     if(hours < 10)
@@ -106,6 +177,17 @@ public class ClockPanel extends JPanel implements Runnable{
 
 
   }
+
+  /**
+    * overrides the paint method of the runnable interface
+    * <p>
+    * calls the paintNumber method of the SevenSegment class
+    * to change the digits according to the current time
+    * an adds semicolons betwee the hours, minutes and seconds segments
+    * </p>
+    * @param Graphics g
+    * @return None 
+    */
 
 @Override public void paint(Graphics g){
     super.paint(g);

@@ -47,7 +47,15 @@ public class AlarmPanel extends JPanel implements Runnable{
   String alarmName;
 
 
-
+  /**
+    * The constructor of the class
+    * <p>
+    * calls the initComponents() method of the class to initalize the components
+    * and starts the Thread
+    * </p>
+    * @param none
+    * @return none
+    */
   public AlarmPanel(){
 
     initComponents();
@@ -353,6 +361,6 @@ public class AlarmPanel extends JPanel implements Runnable{
         e.printStackTrace();
       }
     }
-  }//end run 
+  }//end run
 
 }//end class
