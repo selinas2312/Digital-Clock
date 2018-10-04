@@ -345,7 +345,6 @@ public void stopStopwatch() {
      this.stopMinute = this.minutes;
      this.stopSecond = this.seconds;
      this.stopMillisecond = this.milliseconds;
-     System.out.println("Stop MIlli second ; " + stopMillisecond);
 
      //set buttons
      this.btnStop.setForeground(this.turquoise);
