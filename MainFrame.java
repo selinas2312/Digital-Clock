@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.text.*;
 import java.math.*;
 
+
 /**
   * @author Selina Schuh s5124327
   * @version 1.4
@@ -22,7 +23,6 @@ import java.math.*;
 
 public class MainFrame extends JFrame implements Runnable{
       //class body
-
 
   /**
     * the custom panels that represent the components the main frame is made up of
@@ -42,7 +42,7 @@ public class MainFrame extends JFrame implements Runnable{
   /**
     * the different colors for the components of the main frame
     */
-  Color lightgrey, darkgrey, turquoise, defaultCol;
+  private Color lightgrey, darkgrey, turquoise, defaultCol;
 
 
   /**

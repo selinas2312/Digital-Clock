@@ -1,5 +1,4 @@
 import java.util.*;
-//import java.awt.*;
 import javax.swing.*;
 import java.awt.LayoutManager;
 import java.awt.Color;
@@ -14,38 +13,38 @@ import java.text.*;
 
 /**
   * @author Selina Schuh s5124327
-  * @version 1.4
-  * @since 1.1 
+  * @version 1.5
+  * @since 1.1
   */
 
 public class AlarmPanel extends JPanel implements Runnable{
       //class body
 
-  /**
-    * variables necessary to set the spinners to set the alarm time
-    */
-  List<Integer> hList, minList;
-  SpinnerListModel hModel, minModel;
-  JSpinner hSpinner, minSpinner;
+    /**
+      * variables necessary to set the spinners to set the alarm time
+      */
+  private List<Integer> hList, minList;
+  private SpinnerListModel hModel, minModel;
+  private JSpinner hSpinner, minSpinner;
 
   /**
     * GUI components
     */
-  JLabel hLbl, minLbl, panelLabel;
-  JButton btnSet, btnCancel, btnDelete;
-  JComponent editor;
-  JTextField txtAlarm;
+  private JLabel hLbl, minLbl, panelLabel;
+  private JButton btnSet, btnCancel, btnDelete;
+  private JComponent editor;
+  private JTextField txtAlarm;
 
   /**
     *Font and Colors fot the GUI components
     */
-  Font font;
-  Color lightgrey, turquoise;
+  private Font font;
+  private Color lightgrey, turquoise;
 
-  boolean alarmSet;
-  int alarmH, alarmMin;
-  Thread th;
-  String alarmName;
+  private boolean alarmSet;
+  private int alarmH, alarmMin;
+  private Thread th;
+  private String alarmName;
 
 
   /**
@@ -79,31 +78,7 @@ public class AlarmPanel extends JPanel implements Runnable{
     this.lightgrey = new Color(95, 100, 103);
     this.turquoise = new Color(12, 216, 201);
 
-    //initialize hours and minutes list
-    this.hList = new ArrayList<>();
-    this.minList = new ArrayList<>();
-    for(int i = 0; i <= 23; i++){
-      hList.add(i);
-    }
-    for(int i = 0; i <= 59; i++){
-      minList.add(i);
-    }
-
-    //set SpinnerListModels
-    this.minModel = new SpinnerListModel(this.minList);
-    this.hModel = new SpinnerListModel(this.hList);
-
-    //set Spinners
-    this.hSpinner = new JSpinner(hModel);
-    this.minSpinner = new JSpinner(minModel);
-
-    //set color and font for spinners
-    this.editor = minSpinner.getEditor();
-    this.setSpinnerLookAndFeel(editor);
-    this.editor = hSpinner.getEditor();
-    this.setSpinnerLookAndFeel(editor);
-    this.hSpinner.setFont(this.font);
-    this.minSpinner.setFont(this.font);
+    this.setSpinners();
 
     //set buttons
     this.btnSet = new JButton("Set Alarm");
@@ -148,7 +123,7 @@ public class AlarmPanel extends JPanel implements Runnable{
 
     //add components
     //first row
-    c.insets = new Insets(30, 10, 10, 0);
+    c.insets = new Insets(10, 10, 10, 0);
     c.gridwidth = 3;
     //c.gridx = 1;
     c.gridy = 0;
@@ -160,7 +135,7 @@ public class AlarmPanel extends JPanel implements Runnable{
     c.ipady = 30;
     this.add(this.hLbl, c);
 
-    c.gridx = 2;
+    c.gridx = 1;
     this.add(this.minLbl, c);
 
     c.ipadx = 200;
@@ -169,7 +144,7 @@ public class AlarmPanel extends JPanel implements Runnable{
     c.gridy = 2;
     this.add(this.hSpinner, c);
 
-    c.gridx = 2;;
+    c.gridx = 1;
     this.add(this.minSpinner, c);
 
     c.gridwidth = 3;
@@ -299,6 +274,44 @@ public class AlarmPanel extends JPanel implements Runnable{
         }
     }
   }//end setSpinnerLookAndFeel
+
+  /**
+    * set Spinners
+    * <p>
+    * set minute and hour spinners to select the time of the timer
+    * by initializing a list for minutes and a list for hours
+    * and adding each list element to the actual spinner component
+    * and call the setSpinnerLookAndFeel function to set fonts and colors
+    * </p>
+    */
+  private void setSpinners(){
+
+    //initialize hours and minutes list
+    this.hList = new ArrayList<>();
+    this.minList = new ArrayList<>();
+    for(int i = 0; i <= 23; i++){
+      hList.add(i);
+    }
+    for(int i = 0; i <= 59; i++){
+      minList.add(i);
+    }
+
+    //set SpinnerListModels
+    this.minModel = new SpinnerListModel(this.minList);
+    this.hModel = new SpinnerListModel(this.hList);
+
+    //set Spinners
+    this.hSpinner = new JSpinner(hModel);
+    this.minSpinner = new JSpinner(minModel);
+
+    //set color and font for spinners
+    this.editor = minSpinner.getEditor();
+    this.setSpinnerLookAndFeel(editor);
+    this.editor = hSpinner.getEditor();
+    this.setSpinnerLookAndFeel(editor);
+    this.hSpinner.setFont(this.font);
+    this.minSpinner.setFont(this.font);
+  }
 
   /**
     * initializes and starts the Thread
