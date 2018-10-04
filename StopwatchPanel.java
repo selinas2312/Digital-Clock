@@ -7,7 +7,7 @@ import java.math.*;
 
 /**
   * @author Selina Schuh s5124327
-  * @version 1.4
+  * @version 1.5
   * @since 1.2
   */
 
@@ -17,12 +17,12 @@ public class StopwatchPanel extends JPanel implements Runnable{
       /**
         * buttons to start, stop and reset the stopwatch
         */
-  JButton btnStart, btnStop, btnReset;
+  private JButton btnStart, btnStop, btnReset;
 
   /**
     * label to display the name of the panel
     */
-  JLabel panelLabel, placeHolder;
+  private JLabel panelLabel, placeHolder;
 
   /**
     * variables to set the k size of the sevensegment number representation,
@@ -30,40 +30,40 @@ public class StopwatchPanel extends JPanel implements Runnable{
     * the hour, minutes, seconds and milliseconds when the stopwatch is paused/stopped
     * and the start time, elapsed time and stop time of the stopwatch
     */
-  int size = 7;
-  int hours, minutes, seconds, milliseconds, stopHour, stopMinute, stopSecond, stopMillisecond;
-  long startTime, stopTime, elapsedTime;
+  private int size = 7;
+  private int hours, minutes, seconds, milliseconds, stopHour, stopMinute, stopSecond, stopMillisecond;
+  private long startTime, stopTime, elapsedTime;
 
   /**
     * the SevenSegment variables to represent each number of the stopwatch as a sevensegment number
     */
-  SevenSegment h1, h2, min1, min2, s1, s2, mil1, mil2;
+  private SevenSegment h1, h2, min1, min2, s1, s2, mil1, mil2;
 
   /**
     * variables to indicate whether the stopwatch is running or is restarted
     */
-  boolean isRunning, isRestarted;
-  Thread th;
+  private boolean isRunning, isRestarted;
+  private Thread th;
 
   /**
    * variable to set the font of the text components of the panel
    */
-  Font font;
+  private Font font;
 
   /**
     * GridBagLayout constraints for the location of the components of the panel
     */
-  GridBagConstraints c;
+  private GridBagConstraints c;
 
   /**
     * a calendar variable to get the current time
     */
-  Calendar calendar;
+  private Calendar calendar;
 
   /**
     * color variables to set the colors of the background, lables and buttons
     */
-  Color lightgrey, darkgrey, turquoise, defaultCol;
+  private Color lightgrey, darkgrey, turquoise, defaultCol;
 
 
   /**
@@ -140,7 +140,7 @@ public class StopwatchPanel extends JPanel implements Runnable{
 
     GridBagConstraints c = new GridBagConstraints();
 
-    c.insets = new Insets(100, 10, 10, 0);
+    c.insets = new Insets(30, 10, 10, 0);
     c.gridwidth = 3;
     c.gridx = 1;
     c.gridy = 0;
@@ -155,6 +155,7 @@ public class StopwatchPanel extends JPanel implements Runnable{
     this.add(this.placeHolder, c);
     c.gridy = 4;
     this.add(this.placeHolder, c);
+    c.insets = new Insets(100, 10, 10, 0);
     c.gridy = 5;
     this.add(btnStart, c);
 

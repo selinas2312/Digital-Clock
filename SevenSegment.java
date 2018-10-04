@@ -4,7 +4,7 @@ import java.awt.*;
 
 /**
   * @author Selina Schuh s5124327
-  * @version 1.4
+  * @version 1.5
   * @since 1.0
   */
 
@@ -32,7 +32,6 @@ public class SevenSegment{
     * @param int y         the y coordinate
     * @param int k         the factor of the coordinates
     */
-
   public SevenSegment(int x, int y, int k){
     this.x = x;
     this.y = y;

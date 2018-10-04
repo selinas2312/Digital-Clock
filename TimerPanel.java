@@ -1,13 +1,24 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
-import javax.swing.*;
 import java.util.*;
+import javax.swing.*;
+import java.awt.LayoutManager;
+import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.GridBagConstraints;
+import java.awt.Font;
+import java.awt.Component;
+import java.text.*;
+import java.awt.event.*;
+import java.text.*;
+import java.awt.geom.*;
 import java.math.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 
 /**
   * @author Selina Schuh s5124327
-  * @version 1.4
+  * @version 1.5
   * @since 1.3
   */
 
@@ -15,54 +26,61 @@ public class TimerPanel extends JPanel implements Runnable{
        //class body
 
   /**
+    * variables necessary to set the spinners to set the alarm time
+    */
+ private List<Integer> hList, minList;
+ private SpinnerListModel hModel, minModel;
+ private JSpinner hSpinner, minSpinner;
+ private JComponent editor;
+  /**
     * buttons to start, pause and stop the timer
     */
-  JButton btnStart, btnPause, btnReset;
+  private JButton btnStart, btnPause, btnReset;
 
   /**
     * label to display the name of the panel
     */
-  JLabel panelLabel, placeHolder;
+  private JLabel panelLabel, placeHolder;
 
   /**
     * variables to set the k size of the sevensegment number representation,
     * the remaining hours, minutes and seconds of the timer,
     * and the start time, elapsed time and set time of the timer
     */
-  int size = 7;
-  int hours, minutes, seconds;
-  long startTime, elapsedTime, timer = 7200000;
+  private int size = 7;
+  private int hours, minutes, seconds;
+  private long startTime, elapsedTime, timer = 7200000;
 
   /**
     * the SevenSegment variables to represent each number as a sevensegment number
     */
-  SevenSegment h1, h2, min1, min2, s1, s2;
+  private SevenSegment h1, h2, min1, min2, s1, s2;
 
   /**
     * boolean variables to indicate whether the timer is running or paused
     */
-  boolean isRunning, isPaused;
-  Thread th;
+  private boolean isRunning, isPaused;
+  private Thread th;
 
   /**
     * the font for the buttons and labels
     */
-  Font font;
+  private Font font;
 
   /**
     * GridBagLayout constraints for the location of the components of the panel
     */
-  GridBagConstraints c;
+  private GridBagConstraints c;
 
   /**
     * a calendar variable to get the current time
     */
-  Calendar calendar;
+  private Calendar calendar;
 
   /**
     * color variables to set the colors of the background, lables and buttons
     */
-  Color lightgrey, darkgrey, turquoise, defaultCol;
+  private Color lightgrey, darkgrey, turquoise, defaultCol;
 
 
 
@@ -128,16 +146,18 @@ public class TimerPanel extends JPanel implements Runnable{
       }
     });
 
+    this.setSpinners();
     this.setLayout(new GridBagLayout());
     this.setBackground(this.darkgrey);
 
     GridBagConstraints c = new GridBagConstraints();
 
-    c.insets = new Insets(100, 10, 10, 0);
+    c.insets = new Insets(60, 10, 10, 0);
     c.gridwidth = 3;
     c.gridx = 1;
     c.gridy = 0;
     this.add(this.panelLabel, c);
+    c.insets = new Insets(100, 10, 10, 0);
     c.gridwidth = 1;
     c.ipadx = 170;
     c.ipady = 33;
@@ -149,6 +169,12 @@ public class TimerPanel extends JPanel implements Runnable{
     c.gridy = 4;
     this.add(this.placeHolder, c);
     c.gridy = 5;
+    this.add(this.hSpinner, c);
+    c.gridx = 2;
+    this.add(this.minSpinner, c);
+    c.insets = new Insets(30, 10, 10, 0);
+    c.gridx = 1;
+    c.gridy = 6;
     this.add(this.btnStart, c);
 
     c.gridx = 2;
@@ -202,9 +228,30 @@ public class TimerPanel extends JPanel implements Runnable{
        try{
          if(this.isRunning == true)
          {
+
            this.hours = Math.toIntExact((this.startTime - System.currentTimeMillis()) / 3600000);
            this.minutes = Math.toIntExact((this.startTime - System.currentTimeMillis())/60000);
            this.seconds = Math.toIntExact((this.startTime - System.currentTimeMillis())/1000);
+
+           if(this.hours == 0 && this.minutes == 0 && this.seconds == 0)
+           {
+             //add Dialog to Display Timer is up.\
+             this.showTime();
+             Object[] option = {"OKAY"};
+             JOptionPane alarm = new JOptionPane();
+             JOptionPane.showMessageDialog(alarm, "Time is up!!", "Time is up!!", JOptionPane.WARNING_MESSAGE);
+
+             //reset the timer
+             this.isRunning = false;
+             this.isPaused = false;
+             this.hSpinner.setValue(0);
+             this.minSpinner.setValue(0);
+             this.hours = 0;
+             this.minutes = 0;
+             this.seconds = 0;
+             this.timer = 0;
+             this.startTime = 0;
+           }
 
            this.showTime();
          }
@@ -289,6 +336,7 @@ public class TimerPanel extends JPanel implements Runnable{
    public void btnStartActionPerformed(ActionEvent e){
 
      this.isRunning = true;
+     this.timer = ((Integer)this.hSpinner.getValue()) * 3600000 + ((Integer)this.minSpinner.getValue()) * 60000;
      if(this.isPaused == false)
      {
         this.setStartTime();
@@ -341,14 +389,72 @@ public class TimerPanel extends JPanel implements Runnable{
      this.btnPause.setEnabled(false);
 
      //reset everything to 0
+     this.hSpinner.setValue(0);
+     this.minSpinner.setValue(0);
      this.hours = 0;
      this.minutes = 0;
      this.seconds = 0;
-     //this.timer = 0;
+     this.timer = 0;
      this.startTime = 0;
      this.showTime();
      this.repaint();
 
+   }
+
+   /**
+     * sets the color and font of the JSpinners
+     * @param JComponent editor
+     */
+   private void setSpinnerLookAndFeel(JComponent editor){
+
+     int n = editor.getComponentCount();
+     for (int i=0; i<n; i++)
+     {
+         Component c = editor.getComponent(i);
+         if (c instanceof JTextField)
+         {
+             c.setForeground(Color.WHITE);
+             c.setBackground(this.lightgrey);
+         }
+     }
+   }//end setSpinnerLookAndFeel
+
+   /**
+     * set Spinners
+     * <p>
+     * set minute and hour spinners to select the time of the timer
+     * by initializing a list for minutes and a list for hours
+     * and adding each list element to the actual spinner component
+     * and call the setSpinnerLookAndFeel function to set fonts and colors
+     * </p>
+     */
+   private void setSpinners(){
+
+     //initialize hours and minutes list
+     this.hList = new ArrayList<>();
+     this.minList = new ArrayList<>();
+     for(int i = 0; i <= 23; i++){
+       hList.add(i);
+     }
+     for(int i = 0; i <= 59; i++){
+       minList.add(i);
+     }
+
+     //set SpinnerListModels
+     this.minModel = new SpinnerListModel(this.minList);
+     this.hModel = new SpinnerListModel(this.hList);
+
+     //set Spinners
+     this.hSpinner = new JSpinner(hModel);
+     this.minSpinner = new JSpinner(minModel);
+
+     //set color and font for spinners
+     this.editor = minSpinner.getEditor();
+     this.setSpinnerLookAndFeel(editor);
+     this.editor = hSpinner.getEditor();
+     this.setSpinnerLookAndFeel(editor);
+     this.hSpinner.setFont(this.font);
+     this.minSpinner.setFont(this.font);
    }
 
 
