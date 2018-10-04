@@ -12,22 +12,39 @@ import java.text.*;
 import java.awt.event.*;
 import java.text.*;
 
-public class AlarmPanel extends JPanel implements Runnable{
+/**
+  * @author Selina Schuh s5124327
+  * @version 1.4
+  */
 
+public class AlarmPanel extends JPanel implements Runnable{
+      //class body
+
+  /**
+    * variables necessary to set the spinners to set the alarm time
+    */
   List<Integer> hList, minList;
   SpinnerListModel hModel, minModel;
   JSpinner hSpinner, minSpinner;
+
+  /**
+    * GUI components
+    */
   JLabel hLbl, minLbl, panelLabel;
   JButton btnSet, btnCancel, btnDelete;
   JComponent editor;
   JTextField txtAlarm;
+
+  /**
+    *Font and Colors fot the GUI components
+    */
   Font font;
   Color lightgrey, turquoise;
+
   boolean alarmSet;
   int alarmH, alarmMin;
   Thread th;
   String alarmName;
-//  Date currentTime;
 
 
 
@@ -38,6 +55,16 @@ public class AlarmPanel extends JPanel implements Runnable{
 
   }
 
+  /**
+    * Initialize the GUI componenets of this class
+    * <p>
+    *Initializes all GUI components and sets their looks
+    *and feels and adds them to the class panel
+    *also initializes ActionListeners for components
+    * </p>
+    * @param None
+    * @return None
+    */
   private void initComponents(){
 
     this.alarmSet = false;
@@ -180,6 +207,15 @@ public class AlarmPanel extends JPanel implements Runnable{
 
   }//end initComponents
 
+  /**
+    * sets the alarm
+    * <p>
+    *Sets alarm to the time entered by the user
+    *and sets the colors of the GUI accordingly
+    * </p>
+    * @param ActionEvent e
+    * @return None
+    */
   public void btnSetActionPerformed(ActionEvent e)
   {
     this.alarmH = (Integer)this.hSpinner.getValue();
@@ -199,6 +235,16 @@ public class AlarmPanel extends JPanel implements Runnable{
 
   }
 
+  /**
+    * turns alarm off
+    * <p>
+    *Turns off the alarm but does not delete it
+    *so it can be reset again by clicking the set alarm button
+    *Without having to reset the alarm time and name manually
+    * </p>
+    * @param ActionEvent e
+    * @return None
+    */
   public void btnCancelActionPerformed(ActionEvent e)
   {
     this.btnCancel.setForeground(this.turquoise);
@@ -210,6 +256,16 @@ public class AlarmPanel extends JPanel implements Runnable{
 
   }//end btnCancelActionPerformed
 
+
+  /**
+    * deletes the alarm
+    * <p>
+    *Deletes the alarm and resets the time
+    *and name to 0 / null
+    * </p>
+    * @param ActionEvent e
+    * @return None
+    */
   public void btnDeleteActionPerformed(ActionEvent e){
 
     this.hSpinner.setValue(0);
@@ -224,6 +280,11 @@ public class AlarmPanel extends JPanel implements Runnable{
 
   }
 
+  /**
+    * sets the color and font of the JSpinners
+    * @param JComponent editor
+    * @return None
+    */
   private void setSpinnerLookAndFeel(JComponent editor){
 
     int n = editor.getComponentCount();
@@ -238,6 +299,11 @@ public class AlarmPanel extends JPanel implements Runnable{
     }
   }//end setSpinnerLookAndFeel
 
+  /**
+    * initializes and starts the Thread
+    * @param None
+    * @return None
+    */
   public void start(){
     if(th == null)
     {
@@ -246,6 +312,17 @@ public class AlarmPanel extends JPanel implements Runnable{
     }
   }
 
+  /**
+    * run method of runnable interface
+    * <p>
+    * if an alarm is set this method checks if the current time
+    * is equal to the alarm time
+    * if true, a Message Dialog is displayed with the alarm name
+    * and the alarm is reset to 0
+    * </p>
+    * @param ActionEvent e
+    * @return None
+    */
   @Override
   public void run(){
     while(th != null){
@@ -276,6 +353,6 @@ public class AlarmPanel extends JPanel implements Runnable{
         e.printStackTrace();
       }
     }
-  }
+  }//end run 
 
-}
+}//end class

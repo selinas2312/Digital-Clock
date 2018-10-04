@@ -2,9 +2,37 @@ import java.util.*;
 import java.awt.geom.*;
 import java.awt.*;
 
+/**
+  * @author Selina Schuh s5124327
+  * @version 1.6
+  * @since 1.0
+  */
+
 public class SevenSegment{
+      //class body
+
+  /**
+    * coordinates and factor
+    */
   private int x, y, k;
+
+  /**
+    * an array of segments
+    */
   private Segment[] s;
+
+
+  /**
+    *the constructor of the class
+    * <p>
+    * initializes x, y, and k
+    *initializes an array of 7 segments to represent a single number
+    * </p>
+    * @param int x         the x coordinate
+    * @param int y         the y coordinate
+    * @param int k         the factor of the coordinates
+    * @return None
+    */
 
   public SevenSegment(int x, int y, int k){
     this.x = x;
@@ -22,6 +50,16 @@ public class SevenSegment{
 		s[6] = new Segment(x+2*k,y+11*k, k,"h");
   }
 
+
+  /**
+    * sets the number
+    * <p>
+    * turns on/off the single segments of the array
+    * according to what number we want it to display
+    * </p>
+    * @param int num      the number we want to be displayed
+    * @return None
+    */
   public void setNumberTo(int num){
     if(num == 0)
       {
@@ -125,6 +163,18 @@ public class SevenSegment{
       }
   }//end set number to
 
+
+  /**
+    *
+    * paints the number
+    * <p>
+    * actually changes the colors of the segments in the array
+    * depending on the number it is set to display
+    * by calling the render method of the Segment class
+    * </p>
+    * @param Graphics2D g2
+    * @return None
+    */
   public void paintNumber(Graphics2D g2)
   {
     for(int i = 0; i < 7; i++)
@@ -133,6 +183,15 @@ public class SevenSegment{
     }
   }
 
+  /**
+    * turns off number
+    * <p>
+    * turns off the whole number by setting
+    * the state of each segment to false
+    * </p>
+    * @param None
+    * @return None
+    */
   public void unpaintNumber(){
     for(int i = 0; i < 7; i++)
     {
