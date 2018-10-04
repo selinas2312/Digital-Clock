@@ -49,7 +49,7 @@ public class TimerPanel extends JPanel implements Runnable{
     */
   private int size = 7;
   private int hours, minutes, seconds;
-  private long startTime, elapsedTime, timer = 7200000;
+  private long startTime, elapsedTime, timer;
 
   /**
     * the SevenSegment variables to represent each number as a sevensegment number

@@ -91,6 +91,7 @@ public class MainFrame extends JFrame implements Runnable{
     setLayout(new GridLayout(3, 2, 30, 10));
 
     this.setBtnPanel();
+    this.setResizable(false);
     this.plainPanel.setBackground(this.darkgrey);
 
     Container contentPane = getContentPane();
